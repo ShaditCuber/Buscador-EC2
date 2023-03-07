@@ -140,7 +140,8 @@ def subirMonday(licitacion):
         )
     )
     print('Subiendo '+idLic)
-    nombreLic = remover(nombreLic) or idLic
+    nombreLic = remover(nombreLic) or idLic 
+    
     # fecha_cierre=licitacion['fecha_cierre']
     # anexos=licitacion['anexos']
     # link=licitacion['link']
@@ -508,4 +509,3 @@ fin = time.perf_counter()
 tiempo = fin - inicio
 print("El tiempo de ejecución de la función es:", tiempo)
 stopInstance()
-
