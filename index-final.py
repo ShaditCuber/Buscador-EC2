@@ -508,6 +508,7 @@ def index():
 # tiempo = fin - inicio
 # print("El tiempo de ejecución de la función es:", tiempo)
 # stopInstance()
-os.makedirs('/tmp/anexos',exist_ok=True)
+for f in os.listdir(BASE_DIR):
+    os.remove(os.path.join(BASE_DIR, f))s
 driver,wait=initChromeDriver()
 obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
