@@ -1,4 +1,4 @@
-from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET
+from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET,KEEP_FILES
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -39,8 +39,8 @@ COLUMNA_OTROS='archivo'
 
 def initChromeDriver():
     options = Options()
-    options.add_experimental_option("prefs", {
-        "download.default_directory" : BASE_DIR,})
+    # options.add_experimental_option("prefs", {
+    #     "download.default_directory" : BASE_DIR,})
     options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
     options.add_argument("--disable-software-rasterizer")
     options.add_argument("--disable-notifications")
@@ -159,9 +159,14 @@ def subirMonday(licitacion):
             MONDAY.items.add_file_to_column(fila,COLUMNA_BASES,BASE_DIR+'/'+archivo)
             
             
-    for f in os.listdir(BASE_DIR):
-        os.remove(os.path.join(BASE_DIR, f))        
     
+    for file_name in all_files:
+        if file_name not in KEEP_FILES:
+            file_path = os.path.join(BASE_DIR, file_name)
+            try:
+                os.remove(file_path)
+            except:
+                pass
     
     MONDAY.items.change_item_value(BOARD_PRUEBAS,fila,COLUMNA_INSTITUCION,organismo)
     MONDAY.items.change_item_value(BOARD_PRUEBAS,fila,COLUMNA_ID_LICITACION,idLic)
@@ -504,8 +509,17 @@ def index():
 # tiempo = fin - inicio
 # print("El tiempo de ejecución de la función es:", tiempo)
 # stopInstance()
-os.makedirs(BASE_DIR,exist_ok=True)
-for f in os.listdir(BASE_DIR):
-    os.remove(os.path.join(BASE_DIR, f))
+# os.makedirs(BASE_DIR,exist_ok=True)
+
+# Obtiene una lista de todos los archivos en la carpeta
+all_files = os.listdir(BASE_DIR)
+# Elimina todos los archivos que no estén en la lista de conservar
+for file_name in all_files:
+    if file_name not in KEEP_FILES:
+        file_path = os.path.join(BASE_DIR, file_name)
+        try:
+            os.remove(file_path)
+        except:
+            pass
 driver,wait=initChromeDriver()
 obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
