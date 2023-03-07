@@ -38,7 +38,6 @@ COLUMNA_OTROS='archivo'
 
 
 def initChromeDriver():
-    os.makedirs('tmp',exist_ok=True)
     options = Options()
     options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2,
         "download.default_directory" : BASE_DIR,
@@ -319,6 +318,7 @@ def lcomps(string_1):
 
 
 def index():
+    os.makedirs('tmp',exist_ok=True)
     SUBIDOS=getSubidos()
     print('Subidos '+str(len(SUBIDOS)))
     driver,wait=initChromeDriver()
