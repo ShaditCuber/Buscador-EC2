@@ -319,7 +319,7 @@ def lcomps(string_1):
 
 
 def index():
-    os.makedirs('tmp',exist_ok=True)
+    os.makedirs('/tmp/anexos',exist_ok=True)
     SUBIDOS=getSubidos()
     print('Subidos '+str(len(SUBIDOS)))
     driver,wait=initChromeDriver()
