@@ -39,12 +39,12 @@ COLUMNA_OTROS='archivo'
 
 def initChromeDriver():
     options = Options()
-    # options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2,
-    #     "download.default_directory" : './tmp',
-    #     "download.prompt_for_download": False,
-    #     "download.directory_upgrade": True,
-    #     "plugins.always_open_pdf_externally": True,
-    #     "profile.default_content_setting_values.automatic_downloads": 1})
+    options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2,
+        "download.default_directory" : '/tmp',
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "plugins.always_open_pdf_externally": True,
+        "profile.default_content_setting_values.automatic_downloads": 1})
     options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
     options.add_argument("--disable-software-rasterizer")
     options.add_argument("--disable-notifications")
@@ -508,8 +508,8 @@ def index():
 # tiempo = fin - inicio
 # print("El tiempo de ejecución de la función es:", tiempo)
 # stopInstance()
-# os.makedirs(BASE_DIR,exist_ok=True)
-# for f in os.listdir(BASE_DIR):
-#     os.remove(os.path.join(BASE_DIR, f))
+os.makedirs(BASE_DIR,exist_ok=True)
+for f in os.listdir(BASE_DIR):
+    os.remove(os.path.join(BASE_DIR, f))
 driver,wait=initChromeDriver()
 obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
