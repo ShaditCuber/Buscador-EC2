@@ -499,17 +499,17 @@ def index():
     return True
        
     
-# inicio = time.perf_counter()
-# response=index()
-# while(not response):
-#     response=index()
-# time.sleep(4)
-# fin = time.perf_counter()
-# tiempo = fin - inicio
-# print("El tiempo de ejecución de la función es:", tiempo)
-# stopInstance()
-os.makedirs(BASE_DIR,exist_ok=True)
-for f in os.listdir(BASE_DIR):
-    os.remove(os.path.join(BASE_DIR, f))
-driver,wait=initChromeDriver()
-obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
+inicio = time.perf_counter()
+response=index()
+while(not response):
+    response=index()
+time.sleep(4)
+fin = time.perf_counter()
+tiempo = fin - inicio
+print("El tiempo de ejecución de la función es:", tiempo)
+stopInstance()
+# os.makedirs(BASE_DIR,exist_ok=True)
+# for f in os.listdir(BASE_DIR):
+#     os.remove(os.path.join(BASE_DIR, f))
+# driver,wait=initChromeDriver()
+# obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
