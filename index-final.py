@@ -482,7 +482,7 @@ def index():
                     y=x
                 classification.append(driver.find_element(By.ID, f'grvProducto_ctl{y}_lblCategoria').text) 
         
-            if any(onu in CODIGOS for onu in classification) or any(lcomps(palabra) in lcomps(titulo) or lcomps(palabra) in lcomps(descripcion) for palabra in PALABRAS):
+            if any(onu in CODIGOS for onu in classification) and any(lcomps(palabra) in lcomps(titulo) or lcomps(palabra) in lcomps(descripcion) for palabra in PALABRAS):
                 print('ME SIRVE ' + str(ficha))
                 subir.append(ficha)
 
