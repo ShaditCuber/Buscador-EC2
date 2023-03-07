@@ -258,7 +258,7 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
         driver.get(link)
         rows=len(driver.find_elements(By.XPATH,'//*[@id="DWNL_grdId"]/tbody/tr'))
         filas=1 
-            
+        print('Descargando Archivos')    
         while(filas<rows):
             x=filas+1
             if x<10:
