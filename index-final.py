@@ -499,12 +499,14 @@ def index():
     return True
        
     
-inicio = time.perf_counter()
-response=index()
-while(not response):
-    response=index()
-time.sleep(4)
-fin = time.perf_counter()
-tiempo = fin - inicio
-print("El tiempo de ejecución de la función es:", tiempo)
-stopInstance()
+# inicio = time.perf_counter()
+# response=index()
+# while(not response):
+#     response=index()
+# time.sleep(4)
+# fin = time.perf_counter()
+# tiempo = fin - inicio
+# print("El tiempo de ejecución de la función es:", tiempo)
+# stopInstance()
+driver,wait=initChromeDriver()
+obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
