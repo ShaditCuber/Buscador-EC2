@@ -40,7 +40,7 @@ COLUMNA_OTROS='archivo'
 def initChromeDriver():
     options = Options()
     options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2,
-        "download.default_directory" : r'/tmp/anexos',
+        "download.default_directory" : BASE_DIR,
         "download.prompt_for_download": False,
         "download.directory_upgrade": True,
         "plugins.always_open_pdf_externally": True,
@@ -319,7 +319,7 @@ def lcomps(string_1):
 
 
 def index():
-    os.makedirs(BASE_DIR,exist_ok=True)
+    os.makedirs('tmp',exist_ok=True)
     SUBIDOS=getSubidos()
     print('Subidos '+str(len(SUBIDOS)))
     driver,wait=initChromeDriver()
