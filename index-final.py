@@ -284,7 +284,7 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
 
         carpeta_completa=os.listdir(BASE_DIR)
         anexos = [file_name for file_name in carpeta_completa if file_name not in KEEP_FILES]
-        print("Anexos a subir "+anexos)
+        print("Anexos a subir "+str(anexos))
         licitacionDic={}
         licitacionDic['idLic']=idLic
         licitacionDic['monto']=monto
