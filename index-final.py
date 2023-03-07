@@ -157,7 +157,7 @@ def subirMonday(licitacion):
             MONDAY.items.add_file_to_column(fila,COLUMNA_BASES,BASE_DIR+'/'+archivo)
             
             
-    
+    all_files=os.listdir(BASE_DIR)
     for file_name in all_files:
         if file_name not in KEEP_FILES:
             file_path = os.path.join(BASE_DIR, file_name)
