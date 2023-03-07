@@ -462,7 +462,6 @@ def index():
         classification=[]
         
         # if ficha not in SUBIDOS:
-        print('REVISANDO '+str(ficha))
         driver.get(URL_BASE+ficha)
         try:
             tabla=wait.until(ec.visibility_of_all_elements_located((By.XPATH, '//*[@id="grvProducto"]/tbody/tr')))
