@@ -509,6 +509,6 @@ def index():
 # print("El tiempo de ejecución de la función es:", tiempo)
 # stopInstance()
 for f in os.listdir(BASE_DIR):
-    os.remove(os.path.join(BASE_DIR, f))s
+    os.remove(os.path.join(BASE_DIR, f))
 driver,wait=initChromeDriver()
 obtenerDatosAdjuntos(driver,wait,'1079967-14-L123')
