@@ -1,5 +1,5 @@
 import os
-KEEP_FILES = ['index-final.py', 'licitaciones-subidas.txt', 'setting.py','.git']
+KEEP_FILES = ['index-final.py', 'licitaciones-subidas.txt', 'setting.py','.git','tmp','__pycache__']
 BASE=os.path.dirname(os.path.abspath(__file__))
 MONDAY_API_URL = "https://api.monday.com/v2"
 OBJECT_KEY = "licitaciones-subidas.txt"
