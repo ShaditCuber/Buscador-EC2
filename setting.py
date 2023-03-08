@@ -1,10 +1,11 @@
 import os
-KEEP_FILES = ['index-final.py', 'licitaciones-subidas.txt', 'setting.py','.git','tmp','__pycache__']
+KEEP_FILES = ['index-final.py', 'licitaciones-subidas.txt', 'setting.py','.git','__pycache__','Buscador-EC2']
 BASE=os.path.dirname(os.path.abspath(__file__))
 MONDAY_API_URL = "https://api.monday.com/v2"
 OBJECT_KEY = "licitaciones-subidas.txt"
 LOCAL_FILE = os.path.join(BASE,OBJECT_KEY)
-BASE_DIR=BASE
+# BASE_DIR=BASE
+BASE_DIR='/home/ubuntu'
 BUCKET = 'res-certificados'
 URL_BASE="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idLicitacion="
 MONDAY_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjE4NjUyNzcwNCwidWlkIjoyNTE1MDE3NCwiaWFkIjoiMjAyMi0xMC0xN1QyMzowMzoxMy4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6NjQwOTE1NCwicmduIjoidXNlMSJ9.p4MW-Jjxo8GGKLfJ_Fif5EpYscJahLg9BXeNtj1GSXI"
