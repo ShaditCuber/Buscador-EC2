@@ -499,22 +499,20 @@ def index():
     return True
        
 
-all_files=os.listdir(BASE_DIR)
-print(all_files)
-input('Borro ')
-for file_name in all_files:
-    if file_name not in KEEP_FILES:
-        file_path = os.path.join(BASE_DIR, file_name)
-        try:
-            os.remove(file_path)
-        except:
-            pass    
-# inicio = time.perf_counter()
-# response=index()
-# while(not response):
-#     response=index()
-# time.sleep(4)
-# fin = time.perf_counter()
-# tiempo = fin - inicio
-# print("El tiempo de ejecución de la función es:", tiempo)
-# stopInstance()
+# all_files=os.listdir(BASE_DIR)
+# for file_name in all_files:
+#     if file_name not in KEEP_FILES:
+#         file_path = os.path.join(BASE_DIR, file_name)
+#         try:
+#             os.remove(file_path)
+#         except:
+#             pass    
+inicio = time.perf_counter()
+response=index()
+while(not response):
+    response=index()
+time.sleep(4)
+fin = time.perf_counter()
+tiempo = fin - inicio
+print("El tiempo de ejecución de la función es:", tiempo)
+stopInstance()
