@@ -19,6 +19,9 @@ import datetime
 from monday import MondayClient
 import datetime
 import boto3
+import logging
+logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, format='%(asctime)s | %(message)s')
+
 MONDAY=MondayClient(MONDAY_API_KEY)
 #Columnas monday
 BOARD_PRUEBAS='3684630399'
@@ -134,7 +137,7 @@ def subirMonday(licitacion):
         )
     )
     with open(LOG_FILE, 'a') as f:
-        f.writelines('\nSubiendo '+idLic)
+        print('\nSubiendo '+idLic,file=f)
     nombreLic = remover(nombreLic) or idLic 
     
     # fecha_cierre=licitacion['fecha_cierre']
@@ -259,7 +262,7 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
         rows=len(driver.find_elements(By.XPATH,'//*[@id="DWNL_grdId"]/tbody/tr'))
         filas=1 
         with open(LOG_FILE, 'a') as f:
-            f.writelines('\nDescargando Archivos')  
+            print('\nDescargando Archivos',file=f)  
         while(filas<rows):
             x=filas+1
             if x<10:
@@ -297,7 +300,7 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
         licitacionDic['fecha_cierre_preguntas']=fecha_cierre_preguntas
         if subirMonday(licitacionDic):
             with open(LOCAL_FILE, 'a') as f:
-                    f.writelines('\n'+str(idLic))
+                    print('\n'+str(idLic),file=f)
             s3_client=boto3.client('s3')   
             s3_client.upload_file(LOCAL_FILE, BUCKET, OBJECT_KEY)
             return True
@@ -323,10 +326,14 @@ def lcomps(string_1):
 
 def index():
     SUBIDOS=getSubidos()
-    print('Subidos '+str(len(SUBIDOS)))
+    with open(LOG_FILE, 'a') as f:
+        print('Subidos '+str(len(SUBIDOS)),file=f)
+    
     driver,wait=initChromeDriver()
     def main():
-        print("Comenze")
+        with open(LOG_FILE, 'a') as f:
+            print("Comenze",file=f)
+        
         driver.get('https://www.mercadopublico.cl/Home/')
         elemento = driver.find_element(By.XPATH, "//button[contains(text(), 'Iniciar Sesión')]")
         elemento.click()
@@ -338,7 +345,8 @@ def index():
         
         if driver.current_url.startswith('https://accounts.claveunica.gob.cl/'):
             try:
-                print('Logueando')
+                with open(LOG_FILE, 'a') as f:
+                    print('Logueando',file=f)
                 elemento=  wait.until(ec.visibility_of_element_located((By.XPATH, '//input[@name="run"]')))
                 elemento.send_keys('16.418.605-9')
                 elemento= wait.until(ec.visibility_of_element_located((By.XPATH, '//input[@name="password"]')))
@@ -350,15 +358,19 @@ def index():
 
     while True:
         main()
-        print('Dentro de Mercado')
+        with open(LOG_FILE, 'a') as f:
+            print('Dentro de Mercado',file=f)
         try:
-            print('Buscando Modal')
+            with open(LOG_FILE, 'a') as f:
+                print('Buscando Modal',file=f)
             elemento = wait.until(ec.presence_of_element_located((By.XPATH, '//*[@id="rdbOrg1293151"]'))) 
-            elemento.click()   
-            print('Click Mondal')
+            elemento.click()  
+            with open(LOG_FILE, 'a') as f: 
+                print('Click Mondal',file=f)
             break
         except:
-            print('ELEMENTO rdb  NO DISPONIBLE')
+            with open(LOG_FILE, 'a') as f:
+                print('ELEMENTO rdb  NO DISPONIBLE',file=f)
             pass
 
     elemento=wait.until(ec.visibility_of_element_located((By.XPATH, '//*[@id="myModal"]/div/div/div[3]/a')))    
@@ -370,6 +382,8 @@ def index():
     for orden in elementos:
         if 'recepción conforme' in orden.text:
             idOC=obtenerID_OC(orden.text)
+            with open(LOG_FILE, 'a') as f:
+                print('OC '+idOC,file=f)
             orden.click()
             click_element(wait,By.XPATH,'//*[@id="lblCode2"]')
             time.sleep(10)
@@ -389,11 +403,11 @@ def index():
                 time.sleep(5)
                 driver.switch_to.window(old)
                 #Agregar a Monday
-                print(idOC)
-            
-    print('Salii de Subir Orden de Compra') 
+    
+    
     with open(LOG_FILE, 'a') as f:
-        f.writelines('\nSali de Subir Orden de Compra')
+        print('Salii de Subir Orden de Compra',file=f)        
+    
 
     #Búsqueda de Licitaciones para Ofertar
     # elemento = wait.until(ec.visibility_of_element_located((By.XPATH, "//a[contains(text(), 'Licitaciones ')]")))    
@@ -441,9 +455,10 @@ def index():
         stopInstance()
         print(e)
         # stopInstance()
+    
             
     with open(LOG_FILE, 'a') as f:
-        f.writelines('\nEncontre '+str(cantidadElementos)+' licitaciones')
+        print('\nEncontre '+str(cantidadElementos)+' licitaciones',file=f)
     y=1
     while y<=(int(cantidadElementos/10)+1):
         fichas=driver.find_elements(By.XPATH,'''//a[contains(@onclick, "OpenGlobalPopup('/Procurement/Modules/RFB/DetailsAcquisition.aspx?")]''')
@@ -462,7 +477,7 @@ def index():
     URL_BASE="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idLicitacion="
     subir=[]
     with open(LOG_FILE, 'a') as f:
-        f.writelines('\nREVISARE '+str(len(links_fichas)))
+        print('\nREVISARE '+str(len(links_fichas)),file=f)
     for ficha in links_fichas:    
         classification=[]
         
@@ -496,7 +511,7 @@ def index():
     
     
     with open(LOG_FILE, 'a') as f:
-        f.writelines('\nMe sirven '+str(len(subir))+ ' licitaciones')
+        print('\nMe sirven '+str(len(subir))+ ' licitaciones',file=f)
     for lic in subir:
         obtenerDatosAdjuntos(driver,wait,lic)
 
@@ -514,7 +529,11 @@ def index():
 #         except:
 #             pass
 
-os.makedirs(LOGS_BASE)    
+# Configurar el logger
+
+# Escribir logs
+
+os.makedirs(LOGS_BASE,exist_ok=True)    
 file = open(LOG_FILE, "w")
 inicio = time.perf_counter()
 response=index()
