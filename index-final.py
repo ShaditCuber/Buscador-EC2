@@ -516,7 +516,7 @@ def index():
 
 os.makedirs(LOGS)    
 try:
-    with open(LOGS, "r+") as f:
+    with open(os.path.join(LOGS,'logs.txt'), "r+") as f:
         f.truncate()
 except:
     pass
