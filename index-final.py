@@ -20,6 +20,7 @@ from monday import MondayClient
 import datetime
 import boto3
 import logging
+os.makedirs(LOGS_BASE,exist_ok=True)    
 logging.basicConfig(filename=LOG_FILE, level=logging.ERROR, format='%(asctime)s | %(message)s')
 
 MONDAY=MondayClient(MONDAY_API_KEY)
@@ -529,7 +530,6 @@ for file_name in all_files:
         except:
             pass
 
-os.makedirs(LOGS_BASE,exist_ok=True)    
 file = open(LOG_FILE, "w")
 inicio = time.perf_counter()
 response=index()
