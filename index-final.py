@@ -530,13 +530,15 @@ for file_name in all_files:
         except:
             pass
 
-file = open(LOG_FILE, "w")
-inicio = time.perf_counter()
-response=index()
-while(not response):
-    response=index()
-time.sleep(4)
-fin = time.perf_counter()
-tiempo = fin - inicio
-print("El tiempo de ejecución de la función es:", tiempo)
-stopInstance()
+# file = open(LOG_FILE, "w")
+# inicio = time.perf_counter()
+# response=index()
+# while(not response):
+#     response=index()
+# time.sleep(4)
+# fin = time.perf_counter()
+# tiempo = fin - inicio
+# print("El tiempo de ejecución de la función es:", tiempo)
+# stopInstance()
+a,b=initChromeDriver()
+obtenerDatosAdjuntos(a,b,'4429-17-LE23')
