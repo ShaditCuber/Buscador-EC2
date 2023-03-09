@@ -1,4 +1,4 @@
-from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET,KEEP_FILES
+from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET,KEEP_FILES,LOGS
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -133,7 +133,8 @@ def subirMonday(licitacion):
             'idLic', 'nombreLic', 'fecha_cierre', 'fecha_inicio_preguntas', 'fecha_cierre_preguntas', 'link', 'organismo', 'monto', 'anexos'
         )
     )
-    print('Subiendo '+idLic)
+    with open(LOGS, 'a') as f:
+        f.writelines('\nSubiendo '+idLic)
     nombreLic = remover(nombreLic) or idLic 
     
     # fecha_cierre=licitacion['fecha_cierre']
@@ -257,7 +258,8 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
         driver.get(link)
         rows=len(driver.find_elements(By.XPATH,'//*[@id="DWNL_grdId"]/tbody/tr'))
         filas=1 
-        print('Descargando Archivos')    
+        with open(LOGS, 'a') as f:
+            f.writelines('\nDescargando Archivos')  
         while(filas<rows):
             x=filas+1
             if x<10:
@@ -390,7 +392,8 @@ def index():
                 print(idOC)
             
     print('Salii de Subir Orden de Compra') 
-
+    with open(LOGS, 'a') as f:
+        f.writelines('\nSali de Subir Orden de Compra')
 
     #Búsqueda de Licitaciones para Ofertar
     # elemento = wait.until(ec.visibility_of_element_located((By.XPATH, "//a[contains(text(), 'Licitaciones ')]")))    
@@ -439,7 +442,8 @@ def index():
         print(e)
         # stopInstance()
             
-    print('Encontre '+str(cantidadElementos)+' licitaciones')
+    with open(LOGS, 'a') as f:
+        f.writelines('\nEncontre '+str(cantidadElementos)+' licitaciones')
     y=1
     while y<=(int(cantidadElementos/10)+1):
         fichas=driver.find_elements(By.XPATH,'''//a[contains(@onclick, "OpenGlobalPopup('/Procurement/Modules/RFB/DetailsAcquisition.aspx?")]''')
@@ -457,7 +461,8 @@ def index():
 
     URL_BASE="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idLicitacion="
     subir=[]
-    print('REVISARE '+str(len(links_fichas)))
+    with open(LOGS, 'a') as f:
+        f.writelines('\nREVISARE '+str(len(links_fichas)))
     for ficha in links_fichas:    
         classification=[]
         
@@ -490,7 +495,8 @@ def index():
     
     
     
-    print('Me sirven '+str(len(subir))+ ' licitaciones')
+    with open(LOGS, 'a') as f:
+        f.writelines('\nMe sirven '+str(len(subir))+ ' licitaciones')
     for lic in subir:
         obtenerDatosAdjuntos(driver,wait,lic)
 
@@ -507,7 +513,16 @@ def index():
 #             os.remove(file_path)
 #         except:
 #             pass
-os.makedirs(os.path.join(BASE_DIR,'felipito'))    
+
+os.makedirs(LOGS)    
+try:
+    with open(LOGS, "r+") as f:
+        f.truncate()
+except:
+    pass
+
+
+
 inicio = time.perf_counter()
 response=index()
 while(not response):
