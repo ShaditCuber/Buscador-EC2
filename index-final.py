@@ -515,14 +515,7 @@ def index():
 #             pass
 
 os.makedirs(LOGS)    
-try:
-    with open(os.path.join(LOGS,'logs.txt'), "r+") as f:
-        f.truncate()
-except:
-    pass
-
-
-
+file = open(LOGS+'/logs.txt', "w")
 inicio = time.perf_counter()
 response=index()
 while(not response):
