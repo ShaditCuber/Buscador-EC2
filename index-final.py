@@ -506,7 +506,8 @@ def index():
 #         try:
 #             os.remove(file_path)
 #         except:
-#             pass    
+#             pass
+os.makedirs(os.path.join(BASE_DIR,'felipito'))    
 inicio = time.perf_counter()
 response=index()
 while(not response):
