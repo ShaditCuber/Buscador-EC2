@@ -520,18 +520,14 @@ def index():
     return True
        
 
-# all_files=os.listdir(BASE_DIR)
-# for file_name in all_files:
-#     if file_name not in KEEP_FILES:
-#         file_path = os.path.join(BASE_DIR, file_name)
-#         try:
-#             os.remove(file_path)
-#         except:
-#             pass
-
-# Configurar el logger
-
-# Escribir logs
+all_files=os.listdir(BASE_DIR)
+for file_name in all_files:
+    if file_name not in KEEP_FILES:
+        file_path = os.path.join(BASE_DIR, file_name)
+        try:
+            os.remove(file_path)
+        except:
+            pass
 
 os.makedirs(LOGS_BASE,exist_ok=True)    
 file = open(LOG_FILE, "w")
