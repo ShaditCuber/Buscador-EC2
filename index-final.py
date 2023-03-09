@@ -1,4 +1,4 @@
-from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET,KEEP_FILES,LOGS
+from setting import PALABRAS,CODIGOS,URL_BASE,MONDAY_API_KEY,BASE_DIR,OBJECT_KEY,LOCAL_FILE,MONDAY_API_URL,BUCKET,KEEP_FILES,LOGS_BASE,LOG_FILE
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -133,7 +133,7 @@ def subirMonday(licitacion):
             'idLic', 'nombreLic', 'fecha_cierre', 'fecha_inicio_preguntas', 'fecha_cierre_preguntas', 'link', 'organismo', 'monto', 'anexos'
         )
     )
-    with open(LOGS, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.writelines('\nSubiendo '+idLic)
     nombreLic = remover(nombreLic) or idLic 
     
@@ -258,7 +258,7 @@ def obtenerDatosAdjuntos(driver,wait,idLic:str):
         driver.get(link)
         rows=len(driver.find_elements(By.XPATH,'//*[@id="DWNL_grdId"]/tbody/tr'))
         filas=1 
-        with open(LOGS, 'a') as f:
+        with open(LOG_FILE, 'a') as f:
             f.writelines('\nDescargando Archivos')  
         while(filas<rows):
             x=filas+1
@@ -392,7 +392,7 @@ def index():
                 print(idOC)
             
     print('Salii de Subir Orden de Compra') 
-    with open(LOGS, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.writelines('\nSali de Subir Orden de Compra')
 
     #Búsqueda de Licitaciones para Ofertar
@@ -442,7 +442,7 @@ def index():
         print(e)
         # stopInstance()
             
-    with open(LOGS, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.writelines('\nEncontre '+str(cantidadElementos)+' licitaciones')
     y=1
     while y<=(int(cantidadElementos/10)+1):
@@ -461,7 +461,7 @@ def index():
 
     URL_BASE="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idLicitacion="
     subir=[]
-    with open(LOGS, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.writelines('\nREVISARE '+str(len(links_fichas)))
     for ficha in links_fichas:    
         classification=[]
@@ -495,7 +495,7 @@ def index():
     
     
     
-    with open(LOGS, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.writelines('\nMe sirven '+str(len(subir))+ ' licitaciones')
     for lic in subir:
         obtenerDatosAdjuntos(driver,wait,lic)
@@ -514,8 +514,8 @@ def index():
 #         except:
 #             pass
 
-os.makedirs(LOGS)    
-file = open(LOGS+'/logs.txt', "w")
+os.makedirs(LOGS_BASE)    
+file = open(LOG_FILE, "w")
 inicio = time.perf_counter()
 response=index()
 while(not response):

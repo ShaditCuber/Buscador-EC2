@@ -6,7 +6,9 @@ OBJECT_KEY = "licitaciones-subidas.txt"
 LOCAL_FILE = os.path.join(BASE,OBJECT_KEY)
 # BASE_DIR=BASE
 BASE_DIR='/home/ubuntu'
-LOGS=os.path.join(BASE_DIR,'felipito')
+LOGS_BASE=os.path.join(BASE_DIR,'felipito')
+LOGS='logs.txt'
+LOG_FILE=os.path.join(LOGS_BASE,LOGS)
 BUCKET = 'res-certificados'
 URL_BASE="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idLicitacion="
 MONDAY_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjE4NjUyNzcwNCwidWlkIjoyNTE1MDE3NCwiaWFkIjoiMjAyMi0xMC0xN1QyMzowMzoxMy4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6NjQwOTE1NCwicmduIjoidXNlMSJ9.p4MW-Jjxo8GGKLfJ_Fif5EpYscJahLg9BXeNtj1GSXI"
